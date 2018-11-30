@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-
+require('dotenv').config();
 const jwtKey = require('../_secrets/keys').jwtKey;
 
 // quickly see what this file exports
