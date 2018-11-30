@@ -5,7 +5,7 @@ const knexConfig = require('../knexfile.js');
 
 const db = knex(knexConfig.development);
 
-const { authenticate } = require('./middlewares');
+const { authenticate, generateToken } = require('./middlewares');
 
 module.exports = server => {
   server.post('/api/register', register);
@@ -27,40 +27,27 @@ function register(req, res) {
     .catch(err => res.status(404).json({ message: 'Failed to register user'}));
 };
 
-function generateToken(user) {
-  const payload = {
-      subject: user.id,
-      username: user.username,
-  };
-
-  const secret = process.env.JWT_SECRET;
-  const options = {
-      expiresIn: '1m',
-  };
-
-  return jwt.sign(payload, secret, options);
-}
-
 function login(req, res) {
   // implement user login
-  const creds = reg.body;
+  const creds = req.body;
 
   db('users')
     .where({ username: creds.username })
     .first()
     .then(user => {
       if(user && bcrypt.compareSync(creds.password, user.password)) {
-        res.status(200).json({ message: 'Logged in' });
+        const token = generateToken(user)
+        res.status(200).json({ message: 'Logged in', token });
       } else {
         res.status(401).json({ message: 'Wrong username or password' });
       }
-    }).catch(err => res.status(404).json({ message: 'You shall not pass!!!' }));
+    }).catch(err => res.status(500).json({ message: 'You shall not pass!!!' }));
 };
 
 function getJokes(req, res) {
   axios
     .get(
-      'https://08ad1pao69.execute-api.us-east-1.amazonaws.com/dev/random_ten'
+      'https://safe-falls-22549.herokuapp.com/random_ten'
     )
     .then(response => {
       res.status(200).json(response.data);
