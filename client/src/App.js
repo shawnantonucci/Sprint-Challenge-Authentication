@@ -77,11 +77,11 @@ class App extends Component {
               render={() => {
                 return (
                   <React.Fragment>
-                    <h2>Users</h2>
+                    <h2>Jokes</h2>
                     <div>
                       {this.state.users.map(user => (
                         <div>
-                          <h3 key={user.id}>Name: {user.type} | Department: {user.punchline}</h3>
+                          <h3 key={user.id}>Joke: {user.setup} ---> Answer: {user.punchline}</h3>
                         </div>
                       ))}
                     </div>

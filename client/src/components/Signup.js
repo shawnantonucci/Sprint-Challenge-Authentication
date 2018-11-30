@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Inputform, Inputs, SubmitBtn } from '../Styles.js';
+import { Inputform, Inputs, SubmitBtn, LoginLabel } from '../Styles.js';
 
 const url = process.env.REACT_APP_API_URL;
 
@@ -49,6 +49,7 @@ export class Signup extends Component {
   render() {
     return (
         <div>
+            <LoginLabel htmlFor="username">Sign Up</LoginLabel>
             <Inputform onSubmit={this.submitHandler}>
                 <label htmlFor="username">Username:</label>
                 <Inputs type="text" id="username" name="username" value={this.state.user.username} onChange={this.inputHandler}/>

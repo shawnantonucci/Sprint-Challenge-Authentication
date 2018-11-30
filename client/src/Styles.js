@@ -27,7 +27,7 @@ export const StyledLink = styled(NavLink)`
 export const StyleBtn = styled.button`
   text-decoration: none;
   background-color: white;
-  border: 2px solid red;
+  padding: 5px;
   font-size: 15px;
 
   :hover {
